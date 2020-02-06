@@ -92,6 +92,10 @@ module Paperclip
         %w{image raw video audio}.include?(type.to_s) ? type.to_s : 'image'
       end
 
+      def secure
+        cloudinary_credentials[:secure]
+      end
+
       def cloud_name
         cloudinary_credentials[:cloud_name]
       end
@@ -124,6 +128,7 @@ module Paperclip
         style_opts   = url_opts[:styles].try(:[], style_name) || {}
 
         default_opts[:resource_type] = resource_type
+        default_opts[:secure] = secure
 
         options = {}
         [default_opts, style_opts, inline_opts].each do |opts|
